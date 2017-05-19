@@ -1,0 +1,329 @@
+    java 嵌入式的Web服务器jetty使用例子 
+    相关url：http://blog.csdn.net/earbao/article/details/50222473
+    
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+      xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">  
+      <modelVersion>4.0.0</modelVersion>  
+      <groupId>cn.com.songjy</groupId>  
+      <artifactId>jettydemo</artifactId>  
+      <packaging>war</packaging>  
+      <version>0.0.1-SNAPSHOT</version>  
+      <name>jetty-demo Maven Webapp</name>  
+      <url>http://maven.apache.org</url>  
+      
+      <dependencies>  
+      
+        <dependency>  
+          <groupId>org.apache.tomcat</groupId>  
+          <artifactId>tomcat-servlet-api</artifactId>  
+          <version>7.0.27</version>  
+        </dependency>  
+        <dependency>  
+          <groupId>org.hprose</groupId>  
+          <artifactId>hprose-java</artifactId>  
+          <version>1.5.2</version>  
+        </dependency>  
+      
+        <dependency>  
+          <groupId>org.jiepu</groupId>  
+          <artifactId>thrift-api</artifactId>  
+          <version>1.0</version>  
+        </dependency>  
+      
+        <dependency>  
+          <groupId>com.alibaba</groupId>  
+          <artifactId>fastjson</artifactId>  
+          <version>1.2.7</version>  
+        </dependency>  
+        <dependency>  
+          <groupId>org.eclipse.jetty</groupId>  
+          <artifactId>jetty-server</artifactId>  
+          <version>7.6.0.RC4</version>  
+        </dependency>  
+      
+      
+        <dependency>  
+          <groupId>org.eclipse.jetty</groupId>  
+          <artifactId>jetty-webapp</artifactId>  
+          <version>7.6.0.RC4</version>  
+        </dependency>  
+      
+        <dependency>  
+          <groupId>junit</groupId>  
+          <artifactId>junit</artifactId>  
+          <version>3.8.1</version>  
+          <scope>test</scope>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.mortbay.jetty</groupId>  
+            <artifactId>jetty</artifactId>  
+            <version>6.1.26</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.mortbay.jetty</groupId>  
+            <artifactId>jsp-2.1-jetty</artifactId>  
+            <version>6.1.26</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>commons-logging</groupId>  
+            <artifactId>commons-logging</artifactId>  
+            <version>1.0.4</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>javax.servlet</groupId>  
+            <artifactId>jstl</artifactId>  
+            <version>1.2</version>  
+        </dependency>  
+      </dependencies>  
+      <build>  
+        <finalName>jettydemo</finalName>  
+          <plugins>  
+            <plugin>  
+              <groupId>org.apache.maven.plugins</groupId>  
+              <artifactId>maven-compiler-plugin</artifactId>  
+              <configuration>  
+                <source>1.8</source>  
+                <target>1.8</target>  
+              </configuration>  
+            </plugin>  
+        </plugins>  
+      </build>  
+    </project>  
+
+
+[java] view plain copy
+
+    package cn.com.songjy.jetty;  
+      
+    import com.alibaba.fastjson.JSON;  
+    import org.eclipse.jetty.server.Request;  
+    import org.eclipse.jetty.server.Server;  
+    import org.eclipse.jetty.server.handler.AbstractHandler;  
+      
+    import javax.servlet.ServletException;  
+    import javax.servlet.http.HttpServletRequest;  
+    import javax.servlet.http.HttpServletResponse;  
+    import java.io.IOException;  
+      
+    //http://wiki.eclipse.org/Jetty/Tutorial/Jetty_HelloWorld  
+    public class HelloWorld extends AbstractHandler  
+    {  
+        public void handle(String target,  
+                           Request baseRequest,  
+                           HttpServletRequest request,  
+                           HttpServletResponse response)  
+                throws IOException, ServletException  
+        {  
+      
+            System.out.println(target);  
+            System.out.println(JSON.toJSONString(baseRequest.getAuthentication()));  
+            System.out.println(JSON.toJSONString(request.getParameterMap()));  
+            System.out.println(JSON.toJSONString(response.getLocale()));  
+      
+            response.setContentType("text/html;charset=utf-8");  
+            response.setStatus(HttpServletResponse.SC_OK);  
+            baseRequest.setHandled(true);  
+            response.getWriter().println("<h1>Hello World success</h1>");  
+            response.getWriter().println("session=" + request.getSession(true).getId());  
+      
+        }  
+      
+        public static void main(String[] args) throws Exception  
+        {  
+            Server server = new Server(9999);  
+            server.setHandler(new HelloWorld());  
+      
+            server.start();  
+            server.join();  
+        }  
+    }  
+
+[java] view plain copy
+
+    package cn.com.songjy.jetty;  
+      
+    import org.eclipse.jetty.server.Server;  
+    import org.eclipse.jetty.webapp.WebAppContext;  
+      
+    //不使用jetty.xml配置文件启动  
+    //http://hbiao68.iteye.com/blog/2111007  
+    public class SimpleServerStart {  
+        //http://127.0.0.1:9999/simple/  
+        //http://127.0.0.1:9999/simple/servlet  
+        public static void main(String[] args) {  
+            try {  
+                // 服务器的监听端口  
+                Server server = new Server(9999);  
+                // 关联一个已经存在的上下文  
+                WebAppContext context = new WebAppContext();  
+                // 设置描述符位置  
+                context.setDescriptor("./src/main/webapp/WEB-INF/web.xml");  
+                // 设置Web内容上下文路径  
+                context.setResourceBase("./src/main/webapp");  
+                // 设置上下文路径  
+                context.setContextPath("/simple");  
+                context.setParentLoaderPriority(true);  
+                server.setHandler(context);  
+                // 启动  
+                server.start();  
+                server.join();  
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+        }  
+    }  
+
+
+
+[java] view plain copy
+
+    package cn.com.songjy.jetty;  
+      
+    import cn.com.songjy.jetty.servlet.HelloServlet;  
+    import org.eclipse.jetty.server.Server;  
+    import org.eclipse.jetty.servlet.ServletContextHandler;  
+    import org.eclipse.jetty.servlet.ServletHolder;  
+      
+    //无配置启动servlet  
+    public class OneServletContext  
+    {  
+        public static void main(String[] args) throws Exception  
+        {  
+            Server server = new Server(8080);  
+      
+            ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);  
+            //context.setContextPath("/demo");  
+            context.setResourceBase("./src/main/webapp");  
+            context.addServlet(new ServletHolder(new HelloServlet()),"/demo/*");  
+            //context.addServlet(new ServletHolder(new HelloServlet("Buongiorno Mondo")),"/it/*");  
+      
+            server.setHandler(context);  
+            server.start();  
+            server.join();  
+        }  
+    }  
+
+[java] view plain copy
+
+    package cn.com.songjy.jetty;  
+      
+    import org.apache.commons.logging.Log;  
+    import org.apache.commons.logging.LogFactory;  
+    import org.mortbay.jetty.Connector;  
+    import org.mortbay.jetty.Handler;  
+    import org.mortbay.jetty.NCSARequestLog;  
+    import org.mortbay.jetty.Server;  
+    import org.mortbay.jetty.handler.ContextHandlerCollection;  
+    import org.mortbay.jetty.handler.DefaultHandler;  
+    import org.mortbay.jetty.handler.HandlerCollection;  
+    import org.mortbay.jetty.handler.RequestLogHandler;  
+    import org.mortbay.jetty.nio.SelectChannelConnector;  
+    import org.mortbay.jetty.webapp.WebAppContext;  
+    import org.mortbay.xml.XmlConfiguration;  
+    import org.xml.sax.SAXException;  
+      
+    import java.io.BufferedInputStream;  
+    import java.io.FileNotFoundException;  
+    import java.io.IOException;  
+    import java.util.Properties;  
+      
+    public class JettyDemo {  
+      
+        private static final Log log = LogFactory.getLog(JettyDemo.class);  
+      
+        private static final Properties config = new Properties();  
+      
+        static {  
+            BufferedInputStream bufferedInputStream = null;  
+            try {  
+                bufferedInputStream = new BufferedInputStream(JettyDemo.class  
+                        .getClassLoader().getResourceAsStream("jetty.properties"));  
+                  
+                config.load(bufferedInputStream);  
+                  
+            } catch (IOException e) {  
+                log.error(e.getMessage(), e);  
+            } finally {  
+                try {  
+                    if(null != bufferedInputStream)  
+                        bufferedInputStream.close();  
+                } catch (IOException e) {  
+                    log.error(e.getMessage(), e);  
+                }  
+            }  
+        }  
+      
+        //http://127.0.0.1:9999/demo/  
+        public static void main(String[] args) throws Exception {  
+            jetty_start();  
+            //start_jetty();  
+        }  
+      
+        public static void start_jetty() throws SAXException, IOException,  
+                FileNotFoundException, Exception {  
+      
+            Server server = new Server();  
+      
+            // 指定自定义的jetty.xml路径  
+            XmlConfiguration configuration = new XmlConfiguration(Server.class  
+                    .getClassLoader().getResourceAsStream(  
+                            config.getProperty("jetty.xml")));  
+            configuration.configure(server);  
+      
+            server.start();  
+        }  
+      
+        //http://127.0.0.1:9999/demo/index.jsp  
+        public static void jetty_start() {  
+      
+            try {  
+      
+                String jetty_home = "demo";// 这个就是你的项目发布时候的名字  
+                  
+                //用户访问记录  
+                HandlerCollection handlers = new HandlerCollection();  
+                ContextHandlerCollection contexts = new ContextHandlerCollection();  
+                RequestLogHandler requestLogHandler = new RequestLogHandler();  
+                handlers.setHandlers(new Handler[]{contexts,new DefaultHandler(),requestLogHandler});  
+                   
+                NCSARequestLog requestLog = new NCSARequestLog("./target/jetty-yyyy_mm_dd.request.log");  
+                requestLog.setRetainDays(90);  
+                requestLog.setAppend(true);  
+                requestLog.setExtended(false);  
+                requestLog.setLogTimeZone("GMT");  
+                requestLogHandler.setRequestLog(requestLog);  
+      
+                Server server = new Server();  
+      
+                Connector connector = new SelectChannelConnector();  
+                connector  
+                        .setPort(Integer.parseInt(config.getProperty("jetty.port")));  
+      
+                server.setConnectors(new Connector[] { connector });  
+      
+                WebAppContext webapp = new WebAppContext();  
+                webapp.setContextPath("/" + jetty_home);// 上下文路径 比如说/demo  
+      
+                // webapp.setResourceBase("./WebRoot");// 你的资源文件所在的路径 一般都在这下面  
+                webapp.setResourceBase(config.getProperty("resourceBase"));  
+      
+                // webapp.setDefaultsDescriptor("./WebRoot/etc/webdefault.xml");  
+                webapp.setDefaultsDescriptor(config.getProperty("webdefault.xml"));  
+      
+                server.setHandler(webapp);  
+                  
+                server.addHandler(handlers);  
+                  
+                server.start();  
+                server.join();  
+      
+            } catch (InterruptedException e) {  
+                log.error(e.getMessage(), e);  
+            } catch (Exception e) {  
+                log.error(e.getMessage(), e);  
+            }  
+        }  
+    }  
+
+相关url：http://blog.csdn.net/earbao/article/details/50222473
+
