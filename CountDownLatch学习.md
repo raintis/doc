@@ -1,5 +1,5 @@
 正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后再执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编 程中跟CountDownLatch相关的以下几点：<br>
-**目录**
+**目录**<br>
 CountDownLatch是什么？
 CountDownLatch如何工作？
 在实时系统中的应用场景
@@ -174,19 +174,18 @@ public class Main {
     }
 }
 ```
-  Output in console:
- 
-  Checking Network Service
-  Checking Cache Service
-  Checking Database Service
-  Database Service is UP
-  Cache Service is UP
-  Network Service is UP
+  Output in console:<br>
+  Checking Network Service<br>
+  Checking Cache Service<br>
+  Checking Database Service<br>
+  Database Service is UP<br>
+  Cache Service is UP<br>
+  Network Service is UP<br>
   External services validation completed !! Result was :: true
 
-**常见面试题**
-可以为你的下次面试准备以下一些CountDownLatch相关的问题：
-解释一下CountDownLatch概念?
-CountDownLatch 和CyclicBarrier的不同之处?
-给出一些CountDownLatch使用的例子?
-CountDownLatch 类中主要的方法?
+**常见面试题**<br>
+##可以为你的下次面试准备以下一些CountDownLatch相关的问题：
+##解释一下CountDownLatch概念?
+##CountDownLatch 和CyclicBarrier的不同之处?
+##给出一些CountDownLatch使用的例子?
+##CountDownLatch 类中主要的方法?
