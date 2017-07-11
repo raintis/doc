@@ -5,14 +5,14 @@ Java平台允许我们在内存中创建可复用的Java对象，但一般情况
 2. 简单示例
 在Java中，只要一个类实现了java.io.Serializable接口，那么它就可以被序列化。此处将创建一个可序列化的类Person，本文中的所有示例将围绕着该类或其修改版。
 Gender类，是一个枚举类型，表示性别
-```
-public enum Gender {  
+```java
+public enum Gender {  
     MALE, FEMALE  
 } 
 ```
 如果熟悉Java枚举类型的话，应该知道每个枚举类型都会默认继承类java.lang.Enum，而该类实现了Serializable接口，所以枚举类型对象都是默认可以被序列化的。
 Person类，实现了Serializable接口，它包含三个字段：name，String类型；age，Integer类型；gender，Gender类型。另外，还重写该类的toString()方法，以方便打印Person实例中的内容。
-```
+```java
 public class Person implements Serializable {  
  
     private String name = null;  
@@ -63,7 +63,7 @@ public class Person implements Serializable {
 } 
 ```
 SimpleSerial，是一个简单的序列化程序，它先将一个Person对象保存到文件person.out中，然后再从该文件中读出被存储的Person对象，并打印该对象。
-```
+```java
 public class SimpleSerial {  
  
     public static void main(String[] args) throws Exception {  
@@ -90,7 +90,7 @@ arg constructor
 当Person对象被保存到person.out文件中之后，我们可以在其它地方去读取该文件以还原对象，但必须确保该读取程序的CLASSPATH中包含有Person.class(哪怕在读取Person对象时并没有显示地使用Person类，如上例所示)，否则会抛出ClassNotFoundException。
 3. Serializable的作用
 为什么一个类实现了Serializable接口，它就可以被序列化呢？在上节的示例中，使用ObjectOutputStream来持久化对象，在该类中有如下代码：
-```
+```java
 private void writeObject0(Object obj, boolean unshared) throws IOException {  
       ...
     if (obj instanceof String) {  
@@ -119,7 +119,7 @@ private void writeObject0(Object obj, boolean unshared) throws IOException {
 在现实应用中，有些时候不能使用默认序列化机制。比如，希望在序列化过程中忽略掉敏感数据，或者简化序列化过程。下面将介绍若干影响序列化的方法。
 5.1 transient关键字
 当某个字段被声明为transient后，默认序列化机制就会忽略该字段。此处将Person类中的age字段声明为transient，如下所示，
-```
+```java
 public class Person implements Serializable {  
     ...  
     transient private Integer age = null;  
@@ -127,14 +127,14 @@ public class Person implements Serializable {
 } 
 ```
 再执行SimpleSerial应用程序，会有如下输出：
-```
+```java
 arg constructor  
 [John, null, MALE] 
 ```
 可见，age字段未被序列化。
 5.2 writeObject()方法与readObject()方法
 对于上述已被声明为transitive的字段age，除了将transitive关键字去掉之外，是否还有其它方法能使它再次可被序列化？方法之一就是在Person类中添加两个方法：writeObject()与readObject()，如下所示：
-```
+```java
 public class Person implements Serializable {  
     ...  
     transient private Integer age = null;  
@@ -154,7 +154,7 @@ public class Person implements Serializable {
 在writeObject()方法中会先调用ObjectOutputStream中的defaultWriteObject()方法，该方法会执行默认的序列化机制，如5.1节所述，<br>
 此时会忽略掉age字段。然后再调用writeInt()方法显示地将age字段写入到ObjectOutputStream中。readObject()的作用则是针对对象的读取，<br>
 其原理与writeObject()方法相同。再次执行SimpleSerial应用程序，则又会有如下输出：<br>
-```
+```java
 arg constructor  
 [John, 31, MALE] 
 ```
@@ -163,7 +163,7 @@ arg constructor
 5.3 Externalizable接口
 无论是使用transient关键字，还是使用writeObject()和readObject()方法，其实都是基于Serializable接口的序列化。<br>
 JDK中提供了另一个序列化接口--Externalizable，使用该接口之后，之前基于Serializable接口的序列化机制就将失效。此时将Person类作如下修改，<br>
-```
+```java
 public class Person implements Externalizable {  
  
     private String name = null;  
@@ -206,7 +206,7 @@ public class Person implements Externalizable {
 } 
 ```
 此时再执行SimpleSerial程序之后会得到如下结果：<br>
-```
+```java
 arg constructor  
 none-arg constructor  
 [null, null, null] 
@@ -215,7 +215,7 @@ none-arg constructor
 Externalizable继承于Serializable，当使用该接口时，序列化的细节需要由程序员去完成。如上所示的代码，由于writeExternal()与readExternal()方法未作任何处理，那么该序列化行为将不会保存/读取任何一个字段。这也就是为什么输出结果中所有字段的值均为空。
 另外，使用Externalizable进行序列化时，当读取对象时，会调用被序列化类的无参构造器去创建一个新的对象，然后再将被保存对象的字段的值分别填充到新对象中。这就是为什么在此次序列化过程中Person类的无参构造器会被调用。由于这个原因，实现Externalizable接口的类必须要提供一个无参的构造器，且它的访问权限为public。
 对上述Person类进行进一步的修改，使其能够对name与age字段进行序列化，但忽略掉gender字段，如下代码所示：
-```
+```java
 public class Person implements Externalizable {  
  
     private String name = null;  
@@ -260,7 +260,7 @@ public class Person implements Externalizable {
 } 
 ```
 执行SimpleSerial之后会有如下结果：<br>
-```
+```java
 arg constructor  
 none-arg constructor  
 [John, 31, null] 
@@ -268,7 +268,7 @@ none-arg constructor
 5.4 readResolve()方法
 当我们使用Singleton模式时，应该是期望某个类的实例应该是唯一的，但如果该类是可序列化的，那么情况可能略有不同。此时对第2节使用的Person类进行修改，<br>
 使其实现Singleton模式，如下所示：
-```
+```java
 public class Person implements Serializable {  
  
     private static class InstanceHolder {  
@@ -299,7 +299,7 @@ public class Person implements Serializable {
 } 
 ```
 同时要修改SimpleSerial应用，使得能够保存/获取上述单例对象，并进行对象相等性比较，如下代码所示：<br>
-```
+```java
 public class SimpleSerial {  
  
     public static void main(String[] args) throws Exception {  
@@ -318,14 +318,14 @@ public class SimpleSerial {
 } 
 ```
 执行上述应用程序后会得到如下结果：
-```
+```java
 arg constructor  
 [John, 31, MALE]  
 false 
 ```
 值得注意的是，从文件person.out中获取的Person对象与Person类中的单例对象并不相等。为了能在序列化过程仍能保持单例的特性，<br>
 可以在Person类中添加一个readResolve()方法，在该方法中直接返回Person的单例对象，如下所示：<br>
-```
+```java
 public class Person implements Serializable {  
  
     private static class InstanceHolder {  
@@ -360,7 +360,7 @@ public class Person implements Serializable {
 } 
 ```
 再次执行本节的SimpleSerial应用后将如下输出：
-```
+```java
 arg constructor  
 [John, 31, MALE]  
 true 
