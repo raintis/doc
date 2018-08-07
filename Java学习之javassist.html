@@ -1,0 +1,1269 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="referrer" content="origin" />
+<title>Java学习之javassist</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=PX31qVjOE47mNaZI9JUSFK-ajuzMnpXA9PeteRNR1Qw1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/coffee/bundle-coffee.css?v=NnZbvdgFaQNhu3t8P4Wsaz98sDQkgRt7Qxq2rzF0ZRU1"/>
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/coffee/bundle-coffee-mobile.css?v=EhLLUe5NHsx18JODVZscd5ef3A8WbJHKTlTvuKQjsl01"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/sunfie/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/sunfie/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/sunfie/wlwmanifest.xml"/>
+<script src="//common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript">var currentBlogApp = 'sunfie', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="/bundles/blog-common.js?v=ZYVeaIjo61MQ6cAGfOdV2UtOT1EphFo-_1mZgz9bJWA1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/sunfie/"><img id="blogLogo" src="/Skins/custom/images/logo.gif" alt="返回主页" /></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/sunfie/">笨小孩</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="navigator">
+			
+<ul id="navList">
+	<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+	<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/sunfie/">首页</a></li>
+	<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+	<li><a id="blog_nav_contact" accesskey="9" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E5%A4%A9~%E5%AE%87~%E7%BF%B1~%E7%BF%94">联系</a></li>
+	<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+	<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/sunfie/rss">订阅</a>
+	<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/sunfie/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a></li>
+</ul>
+
+
+			<div class="blogStats">
+				
+				<div id="blog_stats">
+<!--done-->
+随笔- 340&nbsp;
+文章- 0&nbsp;
+评论- 8&nbsp;
+</div>
+				
+			</div><!--end: blogStats -->
+		</div><!--end: navigator 博客导航栏 -->
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/sunfie/p/5154246.html">Java学习之javassist</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><div><span style="font-family: 楷体; font-size: 16px;"><strong>1、读取和输出字节码</strong></span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;"> 2</span> <span style="color: #008000;">//</span><span style="color: #008000;">会从classpath中查询该类</span>
+<span style="color: #008080;"> 3</span> CtClass cc = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">test.Rectangle</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 4</span> <span style="color: #008000;">//</span><span style="color: #008000;">设置.Rectangle的父类</span>
+<span style="color: #008080;"> 5</span> cc.setSuperclass(pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">test.Point</span><span style="color: #800000;">"</span><span style="color: #000000;">));
+</span><span style="color: #008080;"> 6</span> <span style="color: #008000;">//</span><span style="color: #008000;">输出.Rectangle.class文件到该目录中</span>
+<span style="color: #008080;"> 7</span> cc.writeFile(<span style="color: #800000;">"</span><span style="color: #800000;">c://</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 8</span> <span style="color: #008000;">//</span><span style="color: #008000;">输出成二进制格式
+</span><span style="color: #008080;"> 9</span> <span style="color: #008000;">//</span><span style="color: #008000;">byte[] b=cc.toBytecode();
+</span><span style="color: #008080;">10</span> <span style="color: #008000;">//</span><span style="color: #008000;">输出并加载class 类，默认加载到当前线程的ClassLoader中，也可以选择输出的ClassLoader。
+</span><span style="color: #008080;">11</span> <span style="color: #008000;">//</span><span style="color: #008000;">Class clazz=cc.toClass();</span></pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">这里可以看出，Javassist的加载是依靠ClassPool类，输出方式支持三种。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>2、新增Class</strong></span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;">2</span> CtClass cc = pool.makeClass(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">3</span> <span style="color: #008000;">//</span><span style="color: #008000;">新增方法</span>
+<span style="color: #008080;">4</span> <span style="color: #000000;">cc.addMethod(m);
+</span><span style="color: #008080;">5</span> <span style="color: #008000;">//</span><span style="color: #008000;">新增Field</span>
+<span style="color: #008080;">6</span> cc.addField(f);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">从上面可以看出，对Class的修改主要是依赖于CtClass类。API也比较清楚和简单。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>3、冻结Class</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 当CtClass 调用writeFile()、toClass()、toBytecode() 这些方法的时候，Javassist会冻结CtClass Object，对CtClass object的修改将不允许。这个主要是为了警告开发者该类已经被加载，而JVM是不允许重新加载该类的。如果要突破该限制，方法如下：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> CtClasss cc =<span style="color: #000000;"> ...;
+</span><span style="color: #008080;">2</span> <span style="color: #000000;">    :
+</span><span style="color: #008080;">3</span> <span style="color: #000000;">cc.writeFile();
+</span><span style="color: #008080;">4</span> <span style="color: #000000;">cc.defrost();
+</span><span style="color: #008080;">5</span> cc.setSuperclass(...);    <span style="color: #008000;">//</span><span style="color: #008000;"> OK since the class is not frozen.</span></pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 当&nbsp;ClassPool.doPruning=true的时候，Javassist 在CtClass object被冻结时，会释放存储在ClassPool对应的数据。这样做可以减少javassist的内存消耗。默认情况ClassPool.doPruning=false。例如</span><span style="font-family: 楷体; font-size: 16px;">&nbsp;</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> CtClasss cc =<span style="color: #000000;"> ...;
+</span><span style="color: #008080;">2</span> cc.stopPruning(<span style="color: #0000ff;">true</span><span style="color: #000000;">);
+</span><span style="color: #008080;">3</span> <span style="color: #000000;">    :
+</span><span style="color: #008080;">4</span> cc.writeFile();                             <span style="color: #008000;">//</span><span style="color: #008000;"> convert to a class file.
+</span><span style="color: #008080;">5</span> <span style="color: #008000;">//</span><span style="color: #008000;"> cc没有被释放</span></pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">提示：当调试时，可以调用debugWriteFile()，该方法不会导致CtClass被释放。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>4、Class 搜索路径</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 从上面可以看出Class 的载入是依靠ClassPool，而ClassPool.getDefault() 方法的搜索Classpath 只是搜索JVM的同路径下的class。当一个程序运行在JBoss或者Tomcat下，ClassPool Object 可能找到用户的classes。Javassist&nbsp;提供了四种动态加载classpath的方法。如下</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #008000;">//</span><span style="color: #008000;">默认加载方式如pool.insertClassPath(new ClassClassPath(this.getClass()));</span>
+<span style="color: #008080;"> 2</span> ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;"> 3</span> <span style="color: #008000;">//</span><span style="color: #008000;">从file加载classpath</span>
+<span style="color: #008080;"> 4</span> pool.insertClassPath(<span style="color: #800000;">"</span><span style="color: #800000;">/usr/local/javalib</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+</span><span style="color: #008080;"> 5</span> <span style="color: #008000;">//</span><span style="color: #008000;">从URL中加载</span>
+<span style="color: #008080;"> 6</span> ClassPath cp = <span style="color: #0000ff;">new</span> URLClassPath(<span style="color: #800000;">"</span><span style="color: #800000;">www.javassist.org</span><span style="color: #800000;">"</span>, <span style="color: #800080;">80</span>, <span style="color: #800000;">"</span><span style="color: #800000;">/java/</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">org.javassist.</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 7</span> <span style="color: #000000;">pool.insertClassPath(cp);
+</span><span style="color: #008080;"> 8</span> <span style="color: #008000;">//</span><span style="color: #008000;">从byte[] 中加载</span>
+<span style="color: #008080;"> 9</span> <span style="color: #0000ff;">byte</span>[] b = a <span style="color: #0000ff;">byte</span><span style="color: #000000;"> array;
+</span><span style="color: #008080;">10</span> String name = <span style="color: #0000ff;">class</span><span style="color: #000000;"> name;
+</span><span style="color: #008080;">11</span> cp.insertClassPath(<span style="color: #0000ff;">new</span><span style="color: #000000;"> ByteArrayClassPath(name, b));
+</span><span style="color: #008080;">12</span> <span style="color: #008000;">//</span><span style="color: #008000;">可以从输入流中加载class</span>
+<span style="color: #008080;">13</span> InputStream ins = an input stream <span style="color: #0000ff;">for</span> reading a <span style="color: #0000ff;">class</span><span style="color: #000000;"> file;
+</span><span style="color: #008080;">14</span> CtClass cc = cp.makeClass(ins);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>5、ClassPool</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>5.1 减少内存溢出</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ClassPool是一个CtClass objects的装载容器,当加载了CtClass object后，是不会被ClassPool释放的（默认情况下）,这个是因为CtClass object 有可能在下个阶段会被用到,</span><span style="font-family: 楷体; font-size: 16px;">当加载过多的CtClass object的时候，会造成OutOfMemory的异常。为了避免这个异常，javassist提供几种方法，一种是在上面提到的&nbsp;ClassPool.doPruning这个参数，还有一种方法是调用CtClass.detach()方法，可以把CtClass object 从ClassPool中移除。例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> CtClass cc =<span style="color: #000000;"> ... ;
+</span><span style="color: #008080;">2</span> <span style="color: #000000;">cc.writeFile();
+</span><span style="color: #008080;">3</span> cc.detach();</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 另外一种方法是不用默认的ClassPool即不用&nbsp;ClassPool.getDefault()这个方式来生成,这样当ClassPool没被引用的时候，JVM的垃圾收集会收集该类。例如</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> <span style="color: #008000;">//</span><span style="color: #008000;">ClassPool(true) 会默认加载Jvm的ClassPath</span>
+<span style="color: #008080;">2</span> ClassPool cp = <span style="color: #0000ff;">new</span> ClassPool(<span style="color: #0000ff;">true</span><span style="color: #000000;">);
+</span><span style="color: #008080;">3</span> <span style="color: #008000;">//</span><span style="color: #008000;"> if needed, append an extra search path by appendClassPath()</span></pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>5.2 &nbsp;级联ClassPools</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;javassist支持级联的ClassPool，即类似于继承。例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> ClassPool parent =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;">2</span> ClassPool child = <span style="color: #0000ff;">new</span><span style="color: #000000;"> ClassPool(parent);
+</span><span style="color: #008080;">3</span> child.insertClassPath(<span style="color: #800000;">"</span><span style="color: #800000;">./classes</span><span style="color: #800000;">"</span>);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>5.3 修改已有Class的name以创建一个新的Class</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 当调用setName方法时，会直接修改已有的Class的类名，如果再次使用旧的类名，则会重新在classpath路径下加载。例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;">2</span> CtClass cc = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">3</span> cc.setName(<span style="color: #800000;">"</span><span style="color: #800000;">Pair</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">4</span> <span style="color: #008000;">//</span><span style="color: #008000;">重新在classpath加载</span>
+<span style="color: #008080;">5</span> CtClass cc1 = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span>);<span style="font-family: 楷体; font-size: 16px;">&nbsp;</span></pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 对于一个被冻结（Frozen)的CtClass object ，是不可以修改class name的，如果需要修改，则可以重新加载，例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;">2</span> CtClass cc = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">3</span> <span style="color: #000000;">cc.writeFile(); // has frozened
+</span><span style="color: #008080;">4</span> <span style="color: #008000;">//</span><span style="color: #008000;">cc.setName("Pair");    wrong since writeFile() has been called.</span>
+<span style="color: #008080;">5</span> CtClass cc2 = pool.getAndRename(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">Pair</span><span style="color: #800000;">"</span>);<span style="font-family: 楷体; font-size: 16px; line-height: 1.5;">&nbsp;</span></pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>6、Class loader</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 上面也提到，javassist同个Class是不能在同个ClassLoader中加载两次的,所以在输出CtClass的时候需要注意下，例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #008000;">//</span><span style="color: #008000;"> 当Hello未加载的时候，下面是可以运行的。</span>
+<span style="color: #008080;"> 2</span> ClassPool cp =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;"> 3</span> CtClass cc = cp.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Hello</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 4</span> Class c =<span style="color: #000000;"> cc.toClass();
+</span><span style="color: #008080;"> 5</span> <span style="color: #008000;">//</span><span style="color: #008000;">下面这种情况，由于Hello2已加载，所以会出错</span>
+<span style="color: #008080;"> 6</span> Hello2 h=<span style="color: #0000ff;">new</span><span style="color: #000000;"> Hello2();
+</span><span style="color: #008080;"> 7</span> CtClass cc2 = cp.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Hello2</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 8</span> Class c2 = cc.toClass();<span style="color: #008000;">//</span><span style="color: #008000;">这里会抛出java.lang.LinkageError 异常
+</span><span style="color: #008080;"> 9</span> <span style="color: #008000;">//</span><span style="color: #008000;">解决加载问题，可以指定一个未加载的ClassLoader</span>
+<span style="color: #008080;">10</span> Class c3 = cc.toClass(<span style="color: #0000ff;">new</span> MyClassLoader());</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>6.1 使用javassist.Loader</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 从上面可以看到，如果在同一个ClassLoader加载两次Class抛出异常，为了方便javassist也提供一个Classloader供使用，例如</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span>  ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;">2</span>  Loader cl = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Loader(pool);
+</span><span style="color: #008080;">3</span>  CtClass ct = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">test.Rectangle</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">4</span>  ct.setSuperclass(pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">test.Point</span><span style="color: #800000;">"</span><span style="color: #000000;">));
+</span><span style="color: #008080;">5</span>  Class c = cl.loadClass(<span style="color: #800000;">"</span><span style="color: #800000;">test.Rectangle</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">6</span>  Object rect = c.newInstance();<span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; &nbsp; &nbsp; :</span></pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp;为了方便监听Javassist自带的ClassLoader的生命周期，javassist也提供了一个listener，可以监听ClassLoader的生命周期，例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #008000;">//</span><span style="color: #008000;">Translator 为监听器</span>
+<span style="color: #008080;"> 2</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> MyTranslator implements Translator {
+</span><span style="color: #008080;"> 3</span>     <span style="color: #0000ff;">void</span><span style="color: #000000;"> start(ClassPool pool)
+</span><span style="color: #008080;"> 4</span> <span style="color: #000000;">        throws NotFoundException, CannotCompileException {}
+</span><span style="color: #008080;"> 5</span>     <span style="color: #0000ff;">void</span><span style="color: #000000;"> onLoad(ClassPool pool, String classname)
+</span><span style="color: #008080;"> 6</span> <span style="color: #000000;">        throws NotFoundException, CannotCompileException
+</span><span style="color: #008080;"> 7</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;"> 8</span>         CtClass cc = pool.<span style="color: #0000ff;">get</span><span style="color: #000000;">(classname);
+</span><span style="color: #008080;"> 9</span> <span style="color: #000000;">        cc.setModifiers(Modifier.PUBLIC);
+</span><span style="color: #008080;">10</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">11</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">12</span> <span style="color: #008000;">//</span><span style="color: #008000;">示例</span>
+<span style="color: #008080;">13</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> Main2 {
+</span><span style="color: #008080;">14</span>   <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> main(String[] args) throws Throwable {
+</span><span style="color: #008080;">15</span>      Translator t = <span style="color: #0000ff;">new</span><span style="color: #000000;"> MyTranslator();
+</span><span style="color: #008080;">16</span>      ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;">17</span>      Loader cl = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Loader();
+</span><span style="color: #008080;">18</span> <span style="color: #000000;">     cl.addTranslator(pool, t);
+</span><span style="color: #008080;">19</span>      cl.run(<span style="color: #800000;">"</span><span style="color: #800000;">MyApp</span><span style="color: #800000;">"</span><span style="color: #000000;">, args);
+</span><span style="color: #008080;">20</span> <span style="color: #000000;">  }
+</span><span style="color: #008080;">21</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">22</span> <span style="color: #008000;">//</span><span style="color: #008000;">输出</span>
+<span style="color: #008080;">23</span> % java Main2 arg1 arg2...</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>6.2 修改系统Class</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 由JVM规范可知，system classloader 是比其他classloader 是优先加载的，而system classloader&nbsp;主要是加载系统Class，所以要修改系统Class，如果默认参数运行程序是不可能修改的,如果需要修改也有一些办法，即在运行时加入-Xbootclasspath/p: 参数的意义可以参考其他文件。下面修改String的例子如下：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre>ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();
+CtClass cc </span>= pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">java.lang.String</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+CtField f </span>= <span style="color: #0000ff;">new</span> CtField(CtClass.intType, <span style="color: #800000;">"</span><span style="color: #800000;">hiddenValue</span><span style="color: #800000;">"</span><span style="color: #000000;">, cc);
+f.setModifiers(Modifier.PUBLIC);
+cc.addField(f);
+cc.writeFile(</span><span style="color: #800000;">"</span><span style="color: #800000;">.</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008000;">//</span><span style="color: #008000;">运行脚本</span>
+% java -Xbootclasspath/p:. MyApp arg1 arg2...</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>6.3 动态重载Class</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 如果JVM运行时开启JPDA（Java Platform Debugger Architecture），则Class是运行被动态重新载入的。具体方式可以参考java.lang.Instrument。javassist也提供了一个运行期重载Class的方法，具体可以看API 中的javassist.tools.HotSwapper。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7、Introspection和定制</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; javassist封装了很多很方便的方法以供使用，大部分使用只需要用这些API即可，如果不能满足，Javassist也提供了一个低层的API（具体参考javassist.bytecode 包）来修改原始的Class。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1 插入source 文本在方法体前或者后</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; &nbsp;CtMethod 和CtConstructor 提供了 insertBefore()、insertAfter()和 addCatch()方法，它们可以插入一个souce文本到存在的方法的相应的位置。javassist 包含了一个简单的编译器解析这souce文本成二进制插入到相应的方法体里。</span><span style="font-family: 楷体; font-size: 16px;">javassist&nbsp;还支持插入一个代码段到指定的行数，前提是该行数需要在class 文件里含有。</span><span style="font-family: 楷体; font-size: 16px;">插入的source 可以关联fields 和methods，也可以关联方法的参数。但是关联方法参数的时，需要在程序编译时加上 -g 选项（该选项可以把本地变量的声明保存在class 文件中，默认是不加这个参数的。）。因为默认一般不加这个参数，所以Javassist也提供了一些特殊的变量来代表方法参数：$1,$2,$args...要注意的是，插入的source文本中不能引用方法本地变量的声明，但是可以允许声明一个新的方法本地变量，除非在程序编译时加入-g选项。</span><span style="font-family: 楷体; font-size: 16px;">方法的特殊变量说明：</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><a name="before"></a></span></div>
+<div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$0, $1, $2, ...</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">this and actual parameters</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$args</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">An array of parameters. The type of $args is Object[].</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$$</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">All actual parameters.For example, m($$) is equivalent to m($1,$2,...)</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$cflow(...)</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">cflow variable</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$r</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The result type. It is used in a cast expression.</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$w</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The wrapper type. It is used in a cast expression.</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$_</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The resulting value</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$sig</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">An array of java.lang.Class objects representing the formal parameter types</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$type</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the formal result type.</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$class</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the class currently edited.</span></td>
+</tr>
+</tbody>
+</table>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp;</span></div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.1 $0, $1, $2, ...</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp;$0代码的是this，$1代表方法参数的第一个参数、$2代表方法参数的第二个参数,以此类推，$N代表是方法参数的第N个。例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> <span style="color: #008000;">//</span><span style="color: #008000;">实际方法</span>
+<span style="color: #008080;">2</span> <span style="color: #0000ff;">void</span> move(<span style="color: #0000ff;">int</span> dx, <span style="color: #0000ff;">int</span><span style="color: #000000;"> dy) 
+</span><span style="color: #008080;">3</span> <span style="color: #008000;">//</span><span style="color: #008000;">javassist</span>
+<span style="color: #008080;">4</span> CtMethod m = cc.getDeclaredMethod(<span style="color: #800000;">"</span><span style="color: #800000;">move</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">5</span> <span style="color: #008000;">//</span><span style="color: #008000;">打印dx，和dy</span>
+<span style="color: #008080;">6</span> m.insertBefore(<span style="color: #800000;">"</span><span style="color: #800000;">{ System.out.println($1); System.out.println($2); }</span><span style="color: #800000;">"</span>);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">注意：如果javassist改变了$1的值，那实际参数值也会改变。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.2&nbsp;$args</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; $args 指的是方法所有参数的数组，类似Object[]，如果参数中含有基本类型，则会转成其包装类型。需要注意的时候，$args[0]对应的是$1,而不是$0，$0!=$args[0]，$0=this。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.3&nbsp;$$</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; $$是所有方法参数的简写，主要用在方法调用上。例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> <span style="color: #008000;">//</span><span style="color: #008000;">原方法</span>
+<span style="color: #008080;">2</span> <span style="color: #000000;">move(String a,String b)
+</span><span style="color: #008080;">3</span> move($$) 相当于move($<span style="color: #800080;">1</span>,$<span style="color: #800080;">2</span><span style="color: #000000;">)
+</span><span style="color: #008080;">4</span> <span style="color: #000000;">如果新增一个方法，方法含有move的所有参数，则可以这些写：
+</span><span style="color: #008080;">5</span> exMove($$, context) 相当于 exMove($<span style="color: #800080;">1</span>, $<span style="color: #800080;">2</span>, context)</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.4 $cflow</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp;$cflow意思为控制流（control flow），是一个只读的变量，值为一个方法调用的深度。例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #008000;">//</span><span style="color: #008000;">原方法</span>
+<span style="color: #008080;"> 2</span> <span style="color: #0000ff;">int</span> fact(<span style="color: #0000ff;">int</span><span style="color: #000000;"> n) {
+</span><span style="color: #008080;"> 3</span>     <span style="color: #0000ff;">if</span> (n &lt;= <span style="color: #800080;">1</span><span style="color: #000000;">)
+</span><span style="color: #008080;"> 4</span>         <span style="color: #0000ff;">return</span><span style="color: #000000;"> n;
+</span><span style="color: #008080;"> 5</span>     <span style="color: #0000ff;">else</span>
+<span style="color: #008080;"> 6</span>         <span style="color: #0000ff;">return</span> n * fact(n - <span style="color: #800080;">1</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 7</span> <span style="color: #000000;">}
+</span><span style="color: #008080;"> 8</span> <span style="color: #008000;">//</span><span style="color: #008000;">javassist调用</span>
+<span style="color: #008080;"> 9</span> CtMethod cm =<span style="color: #000000;"> ...;
+</span><span style="color: #008080;">10</span> <span style="color: #008000;">//</span><span style="color: #008000;">这里代表使用了cflow</span>
+<span style="color: #008080;">11</span> cm.useCflow(<span style="color: #800000;">"</span><span style="color: #800000;">fact</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">12</span> <span style="color: #008000;">//</span><span style="color: #008000;">这里用了cflow，说明当深度为0的时候，就是开始当第一次调用fact的方法的时候，打印方法的第一个参数</span>
+<span style="color: #008080;">13</span> cm.insertBefore(<span style="color: #800000;">"</span><span style="color: #800000;">if ($cflow(fact) == 0)</span><span style="color: #800000;">"</span>
+<span style="color: #008080;">14</span>               + <span style="color: #800000;">"</span><span style="color: #800000;">    System.out.println(\"fact \" + $1);</span><span style="color: #800000;">"</span>);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.5 $r</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp;指的是方法返回值的类型，主要用在类型的转型上。例如：</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">Object result = ... ;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">$_ = ($r)result;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">如果返回值为基本类型的包装类型，则该值会自动转成基本类型，如返回值为Integer，则$r为int。如果返回值为void，则该值为null。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.6&nbsp;$w</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">$w代表一个包装类型。主要用在转型上。比如：Integer i = ($w)5; 如果该类型不是基本类型，则会忽略。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.7&nbsp;$_</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">$_代表的是方法的返回值。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.8&nbsp;$sig</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">$sig指的是方法参数的类型（Class）数组，数组的顺序为参数的顺序。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.9 $class</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">$class 指的是this的类型（Class）。也就是$0的类型。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>7.1.10&nbsp;addCatch()</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp;addCatch() 指的是在方法中加入try catch 块，需要注意的是，必须在插入的代码中，加入return 值。$e代表异常值。比如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> CtMethod m =<span style="color: #000000;"> ...;
+</span><span style="color: #008080;">2</span> CtClass etype = ClassPool.getDefault().<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">java.io.IOException</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">3</span> m.addCatch(<span style="color: #800000;">"</span><span style="color: #800000;">{ System.out.println($e); throw $e; }</span><span style="color: #800000;">"</span>, etype);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">实际代码如下：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> <span style="color: #0000ff;">try</span><span style="color: #000000;"> {
+</span><span style="color: #008080;">2</span> <span style="color: #000000;">    the original method body
+</span><span style="color: #008080;">3</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">4</span> <span style="color: #0000ff;">catch</span><span style="color: #000000;"> (java.io.IOException e) {
+</span><span style="color: #008080;">5</span>     System.<span style="color: #0000ff;">out</span><span style="color: #000000;">.println(e);
+</span><span style="color: #008080;">6</span>     <span style="color: #0000ff;">throw</span><span style="color: #000000;"> e;
+</span><span style="color: #008080;">7</span> }</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8、修改方法体</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">CtMethod 和CtConstructor 提供了 setBody() 的方法，可以替换方法或者构造函数里的所有内容。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">支持的变量有：</span></div>
+<div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$0, $1, $2, ...</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">this and actual parameters</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$args</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">An array of parameters. The type of $args is Object[].</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$$</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">All actual parameters.For example, m($$) is equivalent to m($1,$2,...)</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$cflow(...)</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">cflow variable</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$r</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The result type. It is used in a cast expression.</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$w</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The wrapper type. It is used in a cast expression.</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$sig</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">An array of java.lang.Class objects representing the formal parameter types</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$type</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the formal result type.</span></td>
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$class</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the class currently edited.</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">注意 $_变量不支持。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8.1 替换方法中存在的source</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">javassist 允许修改方法里的其中一个表达式，javassist.expr.ExprEditor 这个class 可以替换该表达式。例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> CtMethod cm =<span style="color: #000000;"> ... ;
+</span><span style="color: #008080;"> 2</span> <span style="color: #000000;">cm.instrument(
+</span><span style="color: #008080;"> 3</span>     <span style="color: #0000ff;">new</span><span style="color: #000000;"> ExprEditor() {
+</span><span style="color: #008080;"> 4</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> edit(MethodCall m)
+</span><span style="color: #008080;"> 5</span> <span style="color: #000000;">                      throws CannotCompileException
+</span><span style="color: #008080;"> 6</span> <span style="color: #000000;">        {
+</span><span style="color: #008080;"> 7</span>             <span style="color: #0000ff;">if</span> (m.getClassName().equals(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+</span><span style="color: #008080;"> 8</span>                           &amp;&amp; m.getMethodName().equals(<span style="color: #800000;">"</span><span style="color: #800000;">move</span><span style="color: #800000;">"</span><span style="color: #000000;">))
+</span><span style="color: #008080;"> 9</span>                 m.replace(<span style="color: #800000;">"</span><span style="color: #800000;">{ $1 = 0; $_ = $proceed($$); }</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">10</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">11</span>     });</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; 注意： that the substituted code is not an expression but a statement or a block. It cannot be or contain a try-catch statement.</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">方法instrument() 可以用来搜索方法体里的内容。比如调用一个方法，field访问，对象创建等。如果你想在某个表达式前后插入方法，则修改的souce如下：</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">{ before-statements;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; $_ = $proceed($$);</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; after-statements; }</span><span style="font-family: 楷体; font-size: 16px;">&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8.2&nbsp;javassist.expr.MethodCall</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">MethodCall代表的是一个方法的调用。用replace()方法可以对调用的方法进行替换。</span></div>
+<div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$0</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The target object of the method call.</span><br /><span style="font-family: 楷体; font-size: 16px;">This is not equivalent to this, which represents the caller-side this object.</span><br /><span style="font-family: 楷体; font-size: 16px;">$0 is null if the method is static.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$1, $2, ...</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The parameters of the method call.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$_</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The resulting value of the method call.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$r</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The result type of the method call.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$class</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the class declaring the method.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$sig</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">An array of java.lang.Class objects representing the formal parameter types</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$type</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the formal result type.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$proceed</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The name of the method originally called in the expression.</span></td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">注意：$w, $args 和 $$也是允许的。$0不是this，是只调用方法的Object。$proceed指的是一个特殊的语法，而不是一个String。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8.3&nbsp;javassist.expr.ConstructorCall</strong></span></div>
+<div>
+<div><span style="font-family: 楷体; font-size: 16px;">ConstructorCall 指的是一个构造函数，比如：this()、super()的调用。ConstructorCall.replace()是用来用替换一个块当调用构造方法的时候。</span></div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$0</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The target object of the constructor call. This is equivalent to this.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$1, $2, ...</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The parameters of the constructor call.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$class</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the class declaring the constructor.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$sig</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">An array of java.lang.Class objects representing the formal parameter types.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$proceed</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The name of the constructor originally called in the expression.</span></td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">$w, $args 和 $$ &nbsp;也是允许的。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8.4 javassist.expr.FieldAccess</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">FieldAccess代表的是Field的访问类。</span></div>
+<div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$0</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The object containing the field accessed by the expression. This is not equivalent to this.</span><br /><span style="font-family: 楷体; font-size: 16px;">this represents the object that the method including the expression is invoked on.</span><br /><span style="font-family: 楷体; font-size: 16px;">$0 is null if the field is static.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$1</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The value that would be stored in the field if the expression is write access.</span><br /><span style="font-family: 楷体; font-size: 16px;">Otherwise, $1 is not available.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$_</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The resulting value of the field access if the expression is read access.</span><br /><span style="font-family: 楷体; font-size: 16px;">Otherwise, the value stored in $_ is discarded.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$r</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The type of the field if the expression is read access.</span><br /><span style="font-family: 楷体; font-size: 16px;">Otherwise, $r is void.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$class</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the class declaring the field.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$type</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the field type.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$proceed</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The name of a virtual method executing the original field access. .</span></td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">$w, $args 和 $$ &nbsp;也是允许的。</span><span style="font-family: 楷体; font-size: 16px;">&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8.5&nbsp;javassist.expr.NewExpr</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">NewExpr代表的是一个Object 的操作(但不包括数组的创建)。</span></div>
+<div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$0</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">null</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$1, $2, ...</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The parameters to the constructor.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$_</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The resulting value of the object creation.</span><br /><span style="font-family: 楷体; font-size: 16px;">A newly created object must be stored in this variable.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$r</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The type of the created object.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$sig</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">An array of java.lang.Class objects representing the formal parameter types</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$type</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the class of the created object.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$proceed</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The name of a virtual method executing the original object creation. .</span></td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">$w, $args 和 $$ &nbsp;也是允许的。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8.6 javassist.expr.NewArray</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">NewArray 代表的是数组的创建。</span></div>
+<div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$0</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">null</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$1, $2, ...</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The size of each dimension.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$_</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The resulting value of the object creation.&nbsp;</span><br /><span style="font-family: 楷体; font-size: 16px;">A newly created array&nbsp;must be stored in this variable.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$r</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The type of the created object.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$type</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the class of the created array&nbsp;.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$proceed</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The name of a virtual method executing the original array&nbsp;creation. .</span></td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">$w, $args 和 $$ &nbsp;也是允许的。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">例如：</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">String[][] s = new String[3][4];</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp;$1 和 $2 的值为 3 和 4, $3&nbsp;得不到的.</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">String[][] s = new String[3][];</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp;$1 的值是 3 ，但 $2 得不到的.</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8.7&nbsp;javassist.expr.Instanceof</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">Instanceof 代表的是Instanceof 表达式。</span></div>
+<div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$0</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">null</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$1</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The value on the left hand side of the original instanceof operator.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$_</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The resulting value of the expression. The type of $_ is boolean.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$r</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The type on the right hand side of the instanceof operator.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$type</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the type on the right hand side of the instanceof operator.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$proceed</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The name of a virtual method executing the original instanceof expression.</span><br /><span style="font-family: 楷体; font-size: 16px;">It takes one parameter (the type is java.lang.Object) and returns true</span><br /><span style="font-family: 楷体; font-size: 16px;">if the parameter value is an instance of the type on the right hand side of</span><br /><span style="font-family: 楷体; font-size: 16px;">the original instanceof operator. Otherwise, it returns false.</span></td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">$w, $args 和 $$ &nbsp;也是允许的。</span><span style="font-family: 楷体; font-size: 16px;">&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8.8&nbsp;javassist.expr.Cast</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">Cast 代表的是一个转型表达式。</span></div>
+<div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$0</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">null</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$1</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The value the type of which is explicitly cast.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$_</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The resulting value of the expression. The type of $_ is the same as the type</span><br /><span style="font-family: 楷体; font-size: 16px;">after the explicit casting, that is, the type surrounded by ( ).</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$r</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">the type after the explicit casting, or the type surrounded by ( ).</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$type</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing the same type as $r.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$proceed</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The name of a virtual method executing the original type casting.</span><br /><span style="font-family: 楷体; font-size: 16px;">It takes one parameter of the type java.lang.Object and returns it after</span><br /><span style="font-family: 楷体; font-size: 16px;">the explicit type casting specified by the original expression.</span></td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">$w, $args 和 $$ &nbsp;也是允许的。</span><span style="font-family: 楷体; font-size: 16px;">&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>8.9&nbsp;javassist.expr.Handler</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">Handler 代表的是一个try catch 声明。</span></div>
+<div>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$1</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The exception object caught by the catch clause.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$r</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">the type of the exception caught by the catch clause. It is used in a cast expression.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$w</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">The wrapper type. It is used in a cast expression.</span></td>
+
+
+</tr>
+<tr>
+<td><span style="font-family: 楷体; font-size: 16px;">$type</span></td>
+<td><span style="font-family: 楷体; font-size: 16px;">A java.lang.Class object representing</span><br /><span style="font-family: 楷体; font-size: 16px;">the type of the exception caught by the catch clause.</span></td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>9 新增一个方法或者field</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">Javassist 允许开发者创建一个新的方法或者构造方法。新增一个方法，例如：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> CtClass point = ClassPool.getDefault().<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 2</span> CtMethod m =<span style="color: #000000;"> CtNewMethod.make(
+</span><span style="color: #008080;"> 3</span>                  <span style="color: #800000;">"</span><span style="color: #800000;">public int xmove(int dx) { x += dx; }</span><span style="color: #800000;">"</span><span style="color: #000000;">,
+</span><span style="color: #008080;"> 4</span> <span style="color: #000000;">                 point);
+</span><span style="color: #008080;"> 5</span> <span style="color: #000000;">point.addMethod(m);
+</span><span style="color: #008080;"> 6</span>  
+<span style="color: #008080;"> 7</span> <span style="color: #000000;">在方法中调用其他方法，例如：
+</span><span style="color: #008080;"> 8</span> CtClass point = ClassPool.getDefault().<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 9</span> CtMethod m =<span style="color: #000000;"> CtNewMethod.make(
+</span><span style="color: #008080;">10</span>                  <span style="color: #800000;">"</span><span style="color: #800000;">public int ymove(int dy) { $proceed(0, dy); }</span><span style="color: #800000;">"</span><span style="color: #000000;">,
+</span><span style="color: #008080;">11</span>                  point, <span style="color: #800000;">"</span><span style="color: #800000;">this</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">move</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">12</span> <span style="color: #000000;">其效果如下：
+</span><span style="color: #008080;">13</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">int</span> ymove(<span style="color: #0000ff;">int</span> dy) { <span style="color: #0000ff;">this</span>.move(<span style="color: #800080;">0</span>, dy); }</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;">下面是javassist提供另一种新增一个方法（未看明白）：</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">Javassist provides another way to add a new method. You can first create an abstract method and later give it a method body:</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> CtClass cc =<span style="color: #000000;"> ... ;
+</span><span style="color: #008080;">2</span> CtMethod m = <span style="color: #0000ff;">new</span> CtMethod(CtClass.intType, <span style="color: #800000;">"</span><span style="color: #800000;">move</span><span style="color: #800000;">"</span><span style="color: #000000;">,
+</span><span style="color: #008080;">3</span>                           <span style="color: #0000ff;">new</span><span style="color: #000000;"> CtClass[] { CtClass.intType }, cc);
+</span><span style="color: #008080;">4</span> <span style="color: #000000;">cc.addMethod(m);
+</span><span style="color: #008080;">5</span> m.setBody(<span style="color: #800000;">"</span><span style="color: #800000;">{ x += $1; }</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">6</span> cc.setModifiers(cc.getModifiers() &amp; ~<span style="color: #000000;">Modifier.ABSTRACT);
+</span><span style="color: #008080;">7</span> Since Javassist makes a <span style="color: #0000ff;">class</span> <span style="color: #0000ff;">abstract</span> <span style="color: #0000ff;">if</span> an <span style="color: #0000ff;">abstract</span> method <span style="color: #0000ff;">is</span> added to the <span style="color: #0000ff;">class</span>, you have to explicitly change the <span style="color: #0000ff;">class</span> back to a non-<span style="color: #0000ff;">abstract</span> one after calling setBody().</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>9.1 递归方法</strong></span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> CtClass cc =<span style="color: #000000;"> ... ;
+</span><span style="color: #008080;">2</span> CtMethod m = CtNewMethod.make(<span style="color: #800000;">"</span><span style="color: #800000;">public abstract int m(int i);</span><span style="color: #800000;">"</span><span style="color: #000000;">, cc);
+</span><span style="color: #008080;">3</span> CtMethod n = CtNewMethod.make(<span style="color: #800000;">"</span><span style="color: #800000;">public abstract int n(int i);</span><span style="color: #800000;">"</span><span style="color: #000000;">, cc);
+</span><span style="color: #008080;">4</span> <span style="color: #000000;">cc.addMethod(m);
+</span><span style="color: #008080;">5</span> <span style="color: #000000;">cc.addMethod(n);
+</span><span style="color: #008080;">6</span> m.setBody(<span style="color: #800000;">"</span><span style="color: #800000;">{ return ($1 &lt;= 0) ? 1 : (n($1 - 1) * $1); }</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">7</span> n.setBody(<span style="color: #800000;">"</span><span style="color: #800000;">{ return m($1); }</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">8</span> cc.setModifiers(cc.getModifiers() &amp; ~Modifier.ABSTRACT);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>9.2 新增field</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">如下：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> CtClass point = ClassPool.getDefault().<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">2</span> CtField f = <span style="color: #0000ff;">new</span> CtField(CtClass.intType, <span style="color: #800000;">"</span><span style="color: #800000;">z</span><span style="color: #800000;">"</span><span style="color: #000000;">, point);
+</span><span style="color: #008080;">3</span> <span style="color: #000000;">point.addField(f);
+</span><span style="color: #008080;">4</span> <span style="color: #008000;">//</span><span style="color: #008000;">point.addField(f, "0");    </span><span style="color: #008000;">//</span><span style="color: #008000;"> initial value is 0.</span>
+<span style="color: #008080;">5</span> <span style="color: #000000;">或者：
+</span><span style="color: #008080;">6</span> CtClass point = ClassPool.getDefault().<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">7</span> CtField f = CtField.make(<span style="color: #800000;">"</span><span style="color: #800000;">public int z = 0;</span><span style="color: #800000;">"</span><span style="color: #000000;">, point);
+</span><span style="color: #008080;">8</span> point.addField(f);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>9.3 移除方法或者field</strong></span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> 调用removeField()或者removeMethod()。</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>10 注解</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">获取注解信息：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #008000;">//</span><span style="color: #008000;">注解</span>
+<span style="color: #008080;"> 2</span> <span style="color: #0000ff;">public</span><span style="color: #000000;"> @interface Author {
+</span><span style="color: #008080;"> 3</span> <span style="color: #000000;">    String name();
+</span><span style="color: #008080;"> 4</span>     <span style="color: #0000ff;">int</span><span style="color: #000000;"> year();
+</span><span style="color: #008080;"> 5</span> <span style="color: #000000;">}
+</span><span style="color: #008080;"> 6</span> <span style="color: #008000;">//</span><span style="color: #008000;">javassist代码</span>
+<span style="color: #008080;"> 7</span> CtClass cc = ClassPool.getDefault().<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">Point</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 8</span> Object[] all =<span style="color: #000000;"> cc.getAnnotations();
+</span><span style="color: #008080;"> 9</span> Author a = (Author)all[<span style="color: #800080;">0</span><span style="color: #000000;">];
+</span><span style="color: #008080;">10</span> String name =<span style="color: #000000;"> a.name();
+</span><span style="color: #008080;">11</span> <span style="color: #0000ff;">int</span> year =<span style="color: #000000;"> a.year();
+</span><span style="color: #008080;">12</span> System.<span style="color: #0000ff;">out</span>.println(<span style="color: #800000;">"</span><span style="color: #800000;">name: </span><span style="color: #800000;">"</span> + name + <span style="color: #800000;">"</span><span style="color: #800000;">, year: </span><span style="color: #800000;">"</span> + year);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>11&nbsp;&nbsp;javassist.runtime&nbsp;</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>12 import</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">引用包：</span></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();
+</span><span style="color: #008080;">2</span> pool.importPackage(<span style="color: #800000;">"</span><span style="color: #800000;">java.awt</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">3</span> CtClass cc = pool.makeClass(<span style="color: #800000;">"</span><span style="color: #800000;">Test</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+</span><span style="color: #008080;">4</span> CtField f = CtField.make(<span style="color: #800000;">"</span><span style="color: #800000;">public Point p;</span><span style="color: #800000;">"</span><span style="color: #000000;">, cc);
+</span><span style="color: #008080;">5</span> cc.addField(f);</pre>
+</div>
+</div>
+<div><span style="font-family: 楷体; font-size: 16px;"><strong>13 限制</strong></span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">（1）不支持java5.0的新增语法。不支持注解修改，但可以通过底层的javassist类来解决，具体参考：javassist.bytecode.annotation</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">（2）不支持数组的初始化，如String[]{"1","2"}，除非只有数组的容量为1</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">（3）不支持内部类和匿名类</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">（4）不支持continue和btreak 表达式。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">（5）对于继承关系，有些不支持。例如</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">class A {}&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">class B extends A {}&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">class C extends B {}&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">class X {&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; void foo(A a) { .. }&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">&nbsp; &nbsp; void foo(B b) { .. }&nbsp;</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">}</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">如果调用&nbsp;&nbsp;x.foo(new C())，可能会调用foo(A) 。</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">（6）推荐开发者用#分隔一个class name和static method或者 static field。例如：</span></div>
+<div><span style="font-family: 楷体; font-size: 16px;">javassist.CtClass.intType.getName()推荐用javassist.CtClass#intType.getName()</span></div>
+<div><strong><span style="font-family: 楷体; font-size: 14pt;">14.完整实例</span></strong></div>
+<div><strong><span style="font-family: 楷体; font-size: 14pt;">14.1 创建类实例</span></strong></div>
+<div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #000000;">package com.swust.javassist;
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #000000;">import javassist.ClassPool;
+</span><span style="color: #008080;"> 4</span> <span style="color: #000000;">import javassist.CtClass;
+</span><span style="color: #008080;"> 5</span> <span style="color: #000000;">import javassist.CtConstructor;
+</span><span style="color: #008080;"> 6</span> <span style="color: #000000;">import javassist.CtField;
+</span><span style="color: #008080;"> 7</span> <span style="color: #000000;">import javassist.CtMethod;
+</span><span style="color: #008080;"> 8</span> 
+<span style="color: #008080;"> 9</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> Example1 {
+</span><span style="color: #008080;">10</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> main(String[] args) throws Exception {  
+</span><span style="color: #008080;">11</span>         ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();  
+</span><span style="color: #008080;">12</span>         CtClass cc = pool.makeClass(<span style="color: #800000;">"</span><span style="color: #800000;">bean.User</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;">13</span>           
+<span style="color: #008080;">14</span>         <span style="color: #008000;">//</span><span style="color: #008000;">创建属性  </span>
+<span style="color: #008080;">15</span>         CtField field01 = CtField.make(<span style="color: #800000;">"</span><span style="color: #800000;">private int id;</span><span style="color: #800000;">"</span><span style="color: #000000;">,cc);  
+</span><span style="color: #008080;">16</span>         CtField field02 = CtField.make(<span style="color: #800000;">"</span><span style="color: #800000;">private String name;</span><span style="color: #800000;">"</span><span style="color: #000000;">, cc);  
+</span><span style="color: #008080;">17</span> <span style="color: #000000;">        cc.addField(field01);  
+</span><span style="color: #008080;">18</span> <span style="color: #000000;">        cc.addField(field02);  
+</span><span style="color: #008080;">19</span>   
+<span style="color: #008080;">20</span>         <span style="color: #008000;">//</span><span style="color: #008000;">创建方法  </span>
+<span style="color: #008080;">21</span>         CtMethod method01 = CtMethod.make(<span style="color: #800000;">"</span><span style="color: #800000;">public String getName(){return name;}</span><span style="color: #800000;">"</span><span style="color: #000000;">, cc);  
+</span><span style="color: #008080;">22</span>         CtMethod method02 = CtMethod.make(<span style="color: #800000;">"</span><span style="color: #800000;">public void setName(String name){this.name = name;}</span><span style="color: #800000;">"</span><span style="color: #000000;">, cc);  
+</span><span style="color: #008080;">23</span> <span style="color: #000000;">        cc.addMethod(method01);  
+</span><span style="color: #008080;">24</span> <span style="color: #000000;">        cc.addMethod(method02);  
+</span><span style="color: #008080;">25</span>           
+<span style="color: #008080;">26</span>         <span style="color: #008000;">//</span><span style="color: #008000;">添加有参构造器  </span>
+<span style="color: #008080;">27</span>         CtConstructor constructor = <span style="color: #0000ff;">new</span> CtConstructor(<span style="color: #0000ff;">new</span> CtClass[]{CtClass.intType,pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">java.lang.String</span><span style="color: #800000;">"</span><span style="color: #000000;">)},cc);  
+</span><span style="color: #008080;">28</span>         constructor.setBody(<span style="color: #800000;">"</span><span style="color: #800000;">{this.id=id;this.name=name;}</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;">29</span> <span style="color: #000000;">        cc.addConstructor(constructor);  
+</span><span style="color: #008080;">30</span>         <span style="color: #008000;">//</span><span style="color: #008000;">无参构造器  </span>
+<span style="color: #008080;">31</span>         CtConstructor cons = <span style="color: #0000ff;">new</span> CtConstructor(<span style="color: #0000ff;">null</span><span style="color: #000000;">,cc);  
+</span><span style="color: #008080;">32</span>         cons.setBody(<span style="color: #800000;">"</span><span style="color: #800000;">{}</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;">33</span> <span style="color: #000000;">        cc.addConstructor(cons);  
+</span><span style="color: #008080;">34</span>           
+<span style="color: #008080;">35</span>         cc.writeFile(<span style="color: #800000;">"</span><span style="color: #800000;">E:/workspace/TestCompiler/src</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;">36</span> <span style="color: #000000;">    }  
+</span><span style="color: #008080;">37</span> }</pre>
+</div>
+<p><span style="font-family: 楷体; font-size: 14pt;"><strong>14.2 访问类实例变量</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">  1</span> <span style="color: #000000;">package com.swust.javassist;
+</span><span style="color: #008080;">  2</span> 
+<span style="color: #008080;">  3</span> <span style="color: #000000;">import java.lang.reflect.Field;
+</span><span style="color: #008080;">  4</span> <span style="color: #000000;">import java.lang.reflect.Method;
+</span><span style="color: #008080;">  5</span> <span style="color: #000000;">import java.util.Arrays;
+</span><span style="color: #008080;">  6</span> 
+<span style="color: #008080;">  7</span> <span style="color: #000000;">import javassist.ClassPool;
+</span><span style="color: #008080;">  8</span> <span style="color: #000000;">import javassist.CtClass;
+</span><span style="color: #008080;">  9</span> <span style="color: #000000;">import javassist.CtConstructor;
+</span><span style="color: #008080;"> 10</span> <span style="color: #000000;">import javassist.CtField;
+</span><span style="color: #008080;"> 11</span> <span style="color: #000000;">import javassist.CtMethod;
+</span><span style="color: #008080;"> 12</span> <span style="color: #000000;">import javassist.CtNewMethod;
+</span><span style="color: #008080;"> 13</span> <span style="color: #000000;">import javassist.Modifier;
+</span><span style="color: #008080;"> 14</span> 
+<span style="color: #008080;"> 15</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> Example2 {
+</span><span style="color: #008080;"> 16</span>         <span style="color: #008000;">//</span><span style="color: #008000;">获取类的简单信息  </span>
+<span style="color: #008080;"> 17</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> test01() throws Exception{ 
+</span><span style="color: #008080;"> 18</span>             ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();  
+</span><span style="color: #008080;"> 19</span>             CtClass cc = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">com.swust.beans.Person</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 20</span>             <span style="color: #008000;">//</span><span style="color: #008000;">得到字节码  </span>
+<span style="color: #008080;"> 21</span>             <span style="color: #0000ff;">byte</span>[] bytes =<span style="color: #000000;"> cc.toBytecode();  
+</span><span style="color: #008080;"> 22</span>             System.<span style="color: #0000ff;">out</span><span style="color: #000000;">.println(Arrays.toString(bytes));  
+</span><span style="color: #008080;"> 23</span>             System.<span style="color: #0000ff;">out</span>.println(cc.getName());<span style="color: #008000;">//</span><span style="color: #008000;">获取类名  </span>
+<span style="color: #008080;"> 24</span>             System.<span style="color: #0000ff;">out</span>.println(cc.getSimpleName());<span style="color: #008000;">//</span><span style="color: #008000;">获取简要类名  </span>
+<span style="color: #008080;"> 25</span>             System.<span style="color: #0000ff;">out</span>.println(cc.getSuperclass());<span style="color: #008000;">//</span><span style="color: #008000;">获取父类  </span>
+<span style="color: #008080;"> 26</span>             System.<span style="color: #0000ff;">out</span>.println(cc.getInterfaces());<span style="color: #008000;">//</span><span style="color: #008000;">获取接口  </span>
+<span style="color: #008080;"> 27</span>             System.<span style="color: #0000ff;">out</span>.println(cc.getMethods());<span style="color: #008000;">//</span><span style="color: #008000;">获取  </span>
+<span style="color: #008080;"> 28</span> <span style="color: #000000;">        }  
+</span><span style="color: #008080;"> 29</span>         <span style="color: #008000;">//</span><span style="color: #008000;">新生成一个方法  </span>
+<span style="color: #008080;"> 30</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> test02() throws Exception{  
+</span><span style="color: #008080;"> 31</span>             ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();  
+</span><span style="color: #008080;"> 32</span>             CtClass cc = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">com.swust.beans.Person</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 33</span>             <span style="color: #008000;">//</span><span style="color: #008000;">第一种  
+</span><span style="color: #008080;"> 34</span>             <span style="color: #008000;">//</span><span style="color: #008000;">CtMethod cm = CtMethod.make("public String getName(){return name;}", cc);  
+</span><span style="color: #008080;"> 35</span>             <span style="color: #008000;">//</span><span style="color: #008000;">第二种  
+</span><span style="color: #008080;"> 36</span>             <span style="color: #008000;">//</span><span style="color: #008000;">参数：返回值类型，方法名，参数，对象  </span>
+<span style="color: #008080;"> 37</span>             CtMethod cm = <span style="color: #0000ff;">new</span> CtMethod(CtClass.intType,<span style="color: #800000;">"</span><span style="color: #800000;">add</span><span style="color: #800000;">"</span>,<span style="color: #0000ff;">new</span><span style="color: #000000;"> CtClass[]{CtClass.intType,CtClass.intType},cc);  
+</span><span style="color: #008080;"> 38</span>             cm.setModifiers(Modifier.PUBLIC);<span style="color: #008000;">//</span><span style="color: #008000;">访问范围  </span>
+<span style="color: #008080;"> 39</span>             cm.setBody(<span style="color: #800000;">"</span><span style="color: #800000;">{return $1+$2;}</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 40</span>             <span style="color: #008000;">//</span><span style="color: #008000;">cc.removeMethod(m) 删除一个方法  </span>
+<span style="color: #008080;"> 41</span> <span style="color: #000000;">            cc.addMethod(cm);  
+</span><span style="color: #008080;"> 42</span>             <span style="color: #008000;">//</span><span style="color: #008000;">通过反射调用方法  </span>
+<span style="color: #008080;"> 43</span>             Class clazz =<span style="color: #000000;"> cc.toClass();  
+</span><span style="color: #008080;"> 44</span>             Object obj = clazz.newInstance();<span style="color: #008000;">//</span><span style="color: #008000;">通过调用无参构造器，生成新的对象  </span>
+<span style="color: #008080;"> 45</span>             Method m = clazz.getDeclaredMethod(<span style="color: #800000;">"</span><span style="color: #800000;">add</span><span style="color: #800000;">"</span>, <span style="color: #0000ff;">int</span>.<span style="color: #0000ff;">class</span>,<span style="color: #0000ff;">int</span>.<span style="color: #0000ff;">class</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 46</span>             Object result = m.invoke(obj, <span style="color: #800080;">2</span>,<span style="color: #800080;">3</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 47</span>             System.<span style="color: #0000ff;">out</span><span style="color: #000000;">.println(result);  
+</span><span style="color: #008080;"> 48</span> <span style="color: #000000;">        }  
+</span><span style="color: #008080;"> 49</span>           
+<span style="color: #008080;"> 50</span>         <span style="color: #008000;">//</span><span style="color: #008000;">修改已有的方法  </span>
+<span style="color: #008080;"> 51</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> test03() throws Exception{  
+</span><span style="color: #008080;"> 52</span>             ClassPool pool  =<span style="color: #000000;"> ClassPool.getDefault();  
+</span><span style="color: #008080;"> 53</span>             CtClass cc = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">bean.User</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 54</span>               
+<span style="color: #008080;"> 55</span>             CtMethod cm = cc.getDeclaredMethod(<span style="color: #800000;">"</span><span style="color: #800000;">hello</span><span style="color: #800000;">"</span>,<span style="color: #0000ff;">new</span> CtClass[]{pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">java.lang.String</span><span style="color: #800000;">"</span><span style="color: #000000;">)});  
+</span><span style="color: #008080;"> 56</span>             cm.insertBefore(<span style="color: #800000;">"</span><span style="color: #800000;">System.out.println(\"调用前\");</span><span style="color: #800000;">"</span>);<span style="color: #008000;">//</span><span style="color: #008000;">调用前  </span>
+<span style="color: #008080;"> 57</span>             cm.insertAt(<span style="color: #800080;">29</span>, <span style="color: #800000;">"</span><span style="color: #800000;">System.out.println(\"29\");</span><span style="color: #800000;">"</span>);<span style="color: #008000;">//</span><span style="color: #008000;">行号  </span>
+<span style="color: #008080;"> 58</span>             cm.insertAfter(<span style="color: #800000;">"</span><span style="color: #800000;">System.out.println(\"调用后\");</span><span style="color: #800000;">"</span>);<span style="color: #008000;">//</span><span style="color: #008000;">调用后  
+</span><span style="color: #008080;"> 59</span>               
+<span style="color: #008080;"> 60</span>             <span style="color: #008000;">//</span><span style="color: #008000;">通过反射调用方法  </span>
+<span style="color: #008080;"> 61</span>             Class clazz =<span style="color: #000000;"> cc.toClass();  
+</span><span style="color: #008080;"> 62</span>             Object obj =<span style="color: #000000;"> clazz.newInstance();  
+</span><span style="color: #008080;"> 63</span>             Method m = clazz.getDeclaredMethod(<span style="color: #800000;">"</span><span style="color: #800000;">hello</span><span style="color: #800000;">"</span>, String.<span style="color: #0000ff;">class</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 64</span>             Object result = m.invoke(obj, <span style="color: #800000;">"</span><span style="color: #800000;">张三</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 65</span>             System.<span style="color: #0000ff;">out</span><span style="color: #000000;">.println(result);       
+</span><span style="color: #008080;"> 66</span> <span style="color: #000000;">        }  
+</span><span style="color: #008080;"> 67</span>           
+<span style="color: #008080;"> 68</span>         <span style="color: #008000;">//</span><span style="color: #008000;">修改已有属性  </span>
+<span style="color: #008080;"> 69</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> test04() throws Exception{  
+</span><span style="color: #008080;"> 70</span>             ClassPool pool  =<span style="color: #000000;"> ClassPool.getDefault();  
+</span><span style="color: #008080;"> 71</span>             CtClass cc = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">bean.User</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 72</span>               
+<span style="color: #008080;"> 73</span>             <span style="color: #008000;">//</span><span style="color: #008000;">属性  </span>
+<span style="color: #008080;"> 74</span>             CtField cf = <span style="color: #0000ff;">new</span> CtField(CtClass.intType,<span style="color: #800000;">"</span><span style="color: #800000;">age</span><span style="color: #800000;">"</span><span style="color: #000000;">,cc);  
+</span><span style="color: #008080;"> 75</span> <span style="color: #000000;">            cf.setModifiers(Modifier.PRIVATE);  
+</span><span style="color: #008080;"> 76</span> <span style="color: #000000;">            cc.addField(cf);  
+</span><span style="color: #008080;"> 77</span>             <span style="color: #008000;">//</span><span style="color: #008000;">增加响应的get set方法  </span>
+<span style="color: #008080;"> 78</span>             cc.addMethod(CtNewMethod.getter(<span style="color: #800000;">"</span><span style="color: #800000;">getAge</span><span style="color: #800000;">"</span><span style="color: #000000;">,cf));  
+</span><span style="color: #008080;"> 79</span>             cc.addMethod(CtNewMethod.setter(<span style="color: #800000;">"</span><span style="color: #800000;">setAge</span><span style="color: #800000;">"</span><span style="color: #000000;">,cf));  
+</span><span style="color: #008080;"> 80</span>               
+<span style="color: #008080;"> 81</span>             <span style="color: #008000;">//</span><span style="color: #008000;">访问属性  </span>
+<span style="color: #008080;"> 82</span>             Class clazz =<span style="color: #000000;"> cc.toClass();  
+</span><span style="color: #008080;"> 83</span>             Object obj =<span style="color: #000000;"> clazz.newInstance();         
+</span><span style="color: #008080;"> 84</span>             Field field = clazz.getDeclaredField(<span style="color: #800000;">"</span><span style="color: #800000;">age</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 85</span>             System.<span style="color: #0000ff;">out</span><span style="color: #000000;">.println(field);  
+</span><span style="color: #008080;"> 86</span>             Method m = clazz.getDeclaredMethod(<span style="color: #800000;">"</span><span style="color: #800000;">setAge</span><span style="color: #800000;">"</span>, <span style="color: #0000ff;">int</span>.<span style="color: #0000ff;">class</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 87</span>             m.invoke(obj, <span style="color: #800080;">16</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 88</span>             Method m2 = clazz.getDeclaredMethod(<span style="color: #800000;">"</span><span style="color: #800000;">getAge</span><span style="color: #800000;">"</span>, <span style="color: #0000ff;">null</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 89</span>             Object resutl = m2.invoke(obj,<span style="color: #0000ff;">null</span><span style="color: #000000;">);          
+</span><span style="color: #008080;"> 90</span>             System.<span style="color: #0000ff;">out</span><span style="color: #000000;">.println(resutl);  
+</span><span style="color: #008080;"> 91</span> <span style="color: #000000;">        }  
+</span><span style="color: #008080;"> 92</span>           
+<span style="color: #008080;"> 93</span>         <span style="color: #008000;">//</span><span style="color: #008000;">操作构造方法  </span>
+<span style="color: #008080;"> 94</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> test05() throws Exception{  
+</span><span style="color: #008080;"> 95</span>             ClassPool pool =<span style="color: #000000;"> ClassPool.getDefault();  
+</span><span style="color: #008080;"> 96</span>             CtClass cc = pool.<span style="color: #0000ff;">get</span>(<span style="color: #800000;">"</span><span style="color: #800000;">com.swust.beans.Person</span><span style="color: #800000;">"</span><span style="color: #000000;">);  
+</span><span style="color: #008080;"> 97</span>               
+<span style="color: #008080;"> 98</span>             CtConstructor[] cons =<span style="color: #000000;"> cc.getConstructors();  
+</span><span style="color: #008080;"> 99</span>             <span style="color: #0000ff;">for</span><span style="color: #000000;">(CtConstructor con:cons){  
+</span><span style="color: #008080;">100</span>                 System.<span style="color: #0000ff;">out</span><span style="color: #000000;">.println(con);  
+</span><span style="color: #008080;">101</span> <span style="color: #000000;">            }  
+</span><span style="color: #008080;">102</span> <span style="color: #000000;">        }  
+</span><span style="color: #008080;">103</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> main(String[] args) throws Exception {  
+</span><span style="color: #008080;">104</span> <span style="color: #000000;">            test01();  
+</span><span style="color: #008080;">105</span>             <span style="color: #008000;">//</span><span style="color: #008000;">test02();  
+</span><span style="color: #008080;">106</span>             <span style="color: #008000;">//</span><span style="color: #008000;">test03();  
+</span><span style="color: #008080;">107</span>             <span style="color: #008000;">//</span><span style="color: #008000;">test04();  </span>
+<span style="color: #008080;">108</span> <span style="color: #000000;">            test05();  
+</span><span style="color: #008080;">109</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">110</span> }</pre>
+</div>
+<p><span style="font-family: 楷体; font-size: 16px;">调用方法1获取类的基本信息，结果如下：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #000000;">完整类名为：com.swust.beans.Person
+</span><span style="color: #008080;"> 2</span> <span style="color: #000000;">类名为：Person
+</span><span style="color: #008080;"> 3</span> <span style="color: #000000;">父类名称为：java.lang.Object
+</span><span style="color: #008080;"> 4</span> *****************************
+<span style="color: #008080;"> 5</span> *****************************
+<span style="color: #008080;"> 6</span> <span style="color: #000000;">属性方法为：wait
+</span><span style="color: #008080;"> 7</span> <span style="color: #000000;">属性方法为：wait
+</span><span style="color: #008080;"> 8</span> <span style="color: #000000;">属性方法为：setName
+</span><span style="color: #008080;"> 9</span> <span style="color: #000000;">属性方法为：notifyAll
+</span><span style="color: #008080;">10</span> <span style="color: #000000;">属性方法为：wait
+</span><span style="color: #008080;">11</span> <span style="color: #000000;">属性方法为：toString
+</span><span style="color: #008080;">12</span> <span style="color: #000000;">属性方法为：getName
+</span><span style="color: #008080;">13</span> <span style="color: #000000;">属性方法为：setAge
+</span><span style="color: #008080;">14</span> <span style="color: #000000;">属性方法为：equals
+</span><span style="color: #008080;">15</span> <span style="color: #000000;">属性方法为：main
+</span><span style="color: #008080;">16</span> <span style="color: #000000;">属性方法为：getAge
+</span><span style="color: #008080;">17</span> <span style="color: #000000;">属性方法为：getClass
+</span><span style="color: #008080;">18</span> <span style="color: #000000;">属性方法为：clone
+</span><span style="color: #008080;">19</span> <span style="color: #000000;">属性方法为：finalize
+</span><span style="color: #008080;">20</span> <span style="color: #000000;">属性方法为：hashCode
+</span><span style="color: #008080;">21</span> 属性方法为：notify</pre>
+</div>
+<p><span style="font-family: 楷体; font-size: 16px;">调用方法2添加新方法：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> 方法执行结果为：<span style="color: #800080;">5</span></pre>
+</div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> <span style="color: #000000;">这是在原有方法体执行之前增加的内容
+</span><span style="color: #008080;">2</span> <span style="color: #000000;">张三
+</span><span style="color: #008080;">3</span> <span style="color: #000000;">这是在原有方法体执行之后增加的内容
+</span><span style="color: #008080;">4</span> <span style="color: #0000ff;">null</span></pre>
+</div>
+<p><span style="font-family: 楷体; font-size: 16px;">调用方法4修改已有属性：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> 增添的属性为：<span style="color: #0000ff;">private</span> <span style="color: #0000ff;">int</span><span style="color: #000000;"> com.swust.beans.Person.age
+</span><span style="color: #008080;">2</span> getAge方法执行后的结果为：<span style="color: #800080;">16</span>
+<span style="color: #008080;">3</span> 增添的属性为：<span style="color: #0000ff;">private</span> <span style="color: #0000ff;">int</span><span style="color: #000000;"> com.swust.beans.Person.height
+</span><span style="color: #008080;">4</span> getHeight方法执行后的结果为：<span style="color: #800080;">176</span></pre>
+</div>
+<p><span style="font-family: 楷体; font-size: 16px;">调用方法5操作构造函数：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> javassist.CtConstructor@180cb01[<span style="color: #0000ff;">public</span> Person ()V]</pre>
+</div>
+<p>&nbsp;</p>
+</div></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2016-01-23 22:31</span> <a href='http://www.cnblogs.com/sunfie/'>天~宇~翱~翔</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="https://i.cnblogs.com/EditPosts.aspx?postid=5154246" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(5154246);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=218369,cb_entryId=5154246,cb_blogApp=currentBlogApp,cb_blogUserGuid='c65ad4fd-b5cb-e411-b908-9dcfd8948a71',cb_entryCreatedDate='2016/1/23 22:31:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='cnblogs_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='cnblogs_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<DIV id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</DIV>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2018 天~宇~翱~翔
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+</body>
+</html>
