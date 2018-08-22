@@ -1,13 +1,13 @@
 __前言__
 之前的文章尤其是讲解GC的时候提到了很多的概念，比如内存溢出和内存泄露、并行与并发、Client模式和Server模式、Minor GC和Full GC，本文详细讲解下这些概念的区别。
 
-内存溢出和内存泄露的区别
+__内存溢出和内存泄露的区别__
 
-__1、内存溢出__
+1、内存溢出
 
 内存溢出指的是程序在申请内存的时候，没有足够大的空间可以分配了。
 
-__2、内存泄露__
+2、内存泄露
 
 内存泄露指的是程序在申请内存之后，没有办法释放掉已经申请到内存，它始终占用着内存，即被分配的对象可达但无用。内存泄露一般都是因为内存中有一块很大的对象，但是无法释放。
 
@@ -65,10 +65,11 @@ System.out.println(System.getProperty("java.vm.name"));
 我这里的运行结果是
 Java HotSpot(TM) 64-Bit Server VM
 当然要改变虚拟机运行的模式也可以，只需要改jvm.cfg就可以了。我们可以从以下几个地方找到jvm.cfg：
-
+```java
 32位的JDK的文件路径是  JAVA_HOME/jre/lib/i386/jvm.cfg
 64位的JDK的文件路径是  JAVA_HOME/jre/lib/amd64/jvm.cfg
 MyEclipse在 …/Common/binary/com.sun.java.jdk.win32.x86_64_1.6.0.013/jre/lib/amd64/jvm.cfg
+```
 目前64位只支持Server模式，文件内容都是一样的，上面的注释不去管它，剩下的就是这些：
 
 ```java
