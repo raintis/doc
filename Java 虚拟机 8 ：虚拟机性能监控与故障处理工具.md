@@ -37,7 +37,7 @@ jps执行样例
 jstat：虚拟机统计信息监控工具
 jstat（JVM Statistics Monitoring Tool）使用于监视虚拟机各种运行状态信息的命令行工具。它可以显示本地或者远程（需要远程主机提供RMI支持）虚拟机进程中的类信息、内存、垃圾收集、JIT编译等运行数据，在没有GUI，只提供了纯文本控制台环境的服务器上，它将是运行期间定位虚拟机性能问题的首选工具。
 
-jstat命令格式
+__jstat命令格式__
 
 jstat [ option vmid [ interval [ s | ms ] [ count ] ] ]
 
@@ -45,21 +45,22 @@ jstat [ option vmid [ interval [ s | ms ] [ count ] ] ]
 
 jstat -gc 2764 250 20
 
-jstat主要工具选项
+__jstat主要工具选项__
 
-选       项	作              用
--class	监视类装载、卸载数量、总空间以及类装载所耗费的时间
--gc	监视Java堆状况，包括Eden区、两个Survivor区、、老年代、永久带等的容量、已用空间、GC时间合计等信息
--gccapacity	监视内容基本与-gc相同，但输出主要关注Java堆各个区域使用到的最大、最小空间
--gcutil	监视内容基本与-gc相同，但输出主要关注已使用的空间占总空间的百分比
--gccause	与-gcutil功能一样，但是会额外输出导致上一次GC产生的原因
--gcnew	监视新生代GC状况
--gcnewcapacity	监视内容基本与-gcnew相同，但输出主要关注使用到的最大、最小空间
--gcold	监视老年代GC状况
--gcoldcapacity	监视内容基本与-gcold相同，但输出主要关注使用到的最大、最小空间
--gcpermcapacity	输出永久代使用到的最大、最小空间
--compiler	输出JIT编译器编译过的方法、耗时等信息
--printcompilation	输出已经被JIT编译的方法
+|选       项	|作              用|
+| :------------------: | :------ |
+|-class	|监视类装载、卸载数量、总空间以及类装载所耗费的时间
+|-gc	|监视Java堆状况，包括Eden区、两个Survivor区、、老年代、永久带等的容量、已用空间、GC时间合计等信息
+|-gccapacity	|监视内容基本与-gc相同，但输出主要关注Java堆各个区域使用到的最大、最小空间
+|-gcutil	|监视内容基本与-gc相同，但输出主要关注已使用的空间占总空间的百分比
+|-gccause	|与-gcutil功能一样，但是会额外输出导致上一次GC产生的原因
+|-gcnew	|监视新生代GC状况
+|-gcnewcapacity	|监视内容基本与-gcnew相同，但输出主要关注使用到的最大、最小空间
+|-gcold	|监视老年代GC状况
+|-gcoldcapacity	|监视内容基本与-gcold相同，但输出主要关注使用到的最大、最小空间
+|-gcpermcapacity	|输出永久代使用到的最大、最小空间
+|-compiler	|输出JIT编译器编译过的方法、耗时等信息
+|-printcompilation	|输出已经被JIT编译的方法
 jstat执行样例
 
 jstat监视选项众多，举一个例子来查看一下该命令如何查看监视结果
@@ -91,13 +92,15 @@ jmap [ option ] vmid
 jmap工具主要选项
 
  
-  选             项                                          作          用
--dump	生成Java堆转储快照。格式为-dump:[live, ]format=b,file=<filename>，其中live自参数说明是否只dump出存活的对象
--finalizerinfo	显示在F-Queue中等待Finalizer线程执行finalize方法的对象。只在Linux和Solaris系统下有效
--heap	显示Java堆详细信息，如使用哪种收集器、参数配置、分代状况等。只在Linux和Solaris系统下有效
--histo	显示堆中对象统计信息，包括类、实例数量、合计容量
--permstat	以ClassLoader为统计口径显示永久代内存状态。只在Linux和Solaris系统下有效
--F	当虚拟机进行对-dump选项没有响应时，可使用这个选项强制生成dump快照。只在Linux和Solaris系统下有效
+  |选             项                             |             作          用|
+  | :------------------: | :------ |
+|-dump	|生成Java堆转储快照。格式为-dump:[live, ]format=b,file=<filename>，其中live自参数说明是否只dump出存活的对象
+|-finalizerinfo	|显示在F-Queue中等待Finalizer线程执行finalize方法的对象。只在Linux和Solaris系统下有效
+|-heap	|显示Java堆详细信息，如使用哪种收集器、参数配置、分代状况等。只在Linux和Solaris系统下有效
+|-histo	|显示堆中对象统计信息，包括类、实例数量、合计容量
+|-permstat	|以ClassLoader为统计口径显示永久代内存状态。只在Linux和Solaris系统下有效
+|-F	|当虚拟机进行对
+|-dump |选项没有响应时，可使用这个选项强制生成dump快照。只在Linux和Solaris系统下有效
 jmap执行样例
 
 同样，这个命令对Window环境限制也比较大，就不演示了。
@@ -111,10 +114,11 @@ jstack [ option ] vmid
 
 jstack主要工具选项
 
-选    项	作             用
--F	当正常输出的请求不被响应时，强制输出线程堆栈
--l	除堆栈外，显示关于锁的附加信息
--m	如果调用到本地方法的时候，可以显示C/C++的堆栈
+|选    项	|作             用|
+| :------------------: | :------ |
+|-F	|当正常输出的请求不被响应时，强制输出线程堆栈
+|-l	|除堆栈外，显示关于锁的附加信息
+|-m	|如果调用到本地方法的时候，可以显示C/C++的堆栈
 jstack执行样例
 
 
