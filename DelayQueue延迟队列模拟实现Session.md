@@ -11,12 +11,13 @@ Session有以下特点：
 2、Session有自动过期时间，到期后系统会自动清理。 
 3、每次获取session对象，该key值所在的对象生命周期重置，过期时间从当前时间开始重新计算。
 
-实现思路： 
+__实现思路： __
+
 1、对于特点1，采用hashmap来保存session存储对象 
 2、对于特点2，3，利用DelayQueue延迟队列来实现： 
 创建一个延迟队列ptrqueue，每当有session插入hashmap时，就同步往ptrqueue队列插入一个与session的key同名的指针对象（该指针实现了Delayed接口，通过key值指向hashmap中对应元素）；每当读取session操作时，就更新ptrqueue队列中对应指针的到期时间；专门开启一个守护线程(阻塞式)从ptrqueue队列中获取过期的指针，再根据指针删除hashmap中对应元素。 
 这里写图片描述
-
+![baidu](https://img-blog.csdn.net/20170228152614399?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc29vbmZseQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast "百度logo")
 ```java
 public class DelayedDemo {
 
@@ -165,7 +166,8 @@ class Itemptr implements Delayed{
     }
 }
 ```
-##输出：
+__输出：__
+
 插入userIdentity：tangwenming,生命周期初始化：5秒 
 插入userGroup：super,生命周期初始化：5秒 
 获取userIdentity成功：tangwenming,生命周期重新计算 
