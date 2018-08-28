@@ -190,7 +190,7 @@ public class MappedTest {
     }
 
 }
-'''
+```
 在上面的代码中，用静态代码块保证了输出的存在。同时用模板方法比较两者之间的运行效率。经过多次测试，本人的测试结果如下： 
 这里写图片描述
 ![](https://img-blog.csdn.net/20170519174422358?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjQwMzI5MA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
